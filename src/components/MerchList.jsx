@@ -1,30 +1,30 @@
 import React from 'react';
 import Ticket from './Merch';
-import { merchList } from './FakeMerchService';
+import PropTypes from "prop-types";
 
-class FlashcardList extends React.Component {
+function TicketList(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      card: merchList(),
-      cardFlip: false,
-    };
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <hr />
-        {this.state.card.map((ticket, index) =>
-          <Ticket id={ticket.id}
-            name={ticket.name}
-            location={ticket.location}
-            issue={ticket.issue}
-            key={index} />
-        )}
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <hr />
+      {props.ticketList.map((ticket) =>
+        <Ticket
+          whenTicketClicked={props.onTicketSelection}
+          name={ticket.name}
+          location={ticket.location}
+          issue={ticket.issue}
+          id={ticket.id}
+          key={ticket.id} />
+      )}
+    </React.Fragment>
+  );
 }
-export default FlashcardList;
+
+TicketList.propTypes = {
+  ticketList: PropTypes.array,
+  onTicketSelection: PropTypes.func
+};
+
+export default TicketList;
+
+
