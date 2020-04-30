@@ -12,6 +12,7 @@ function TicketList(props) {
           whenTicketClicked={props.onTicketSelection}
           name={ticket.name}
           location={ticket.location}
+          inventory={ticket.inventory}
           issue={ticket.issue}
           id={ticket.id}
           key={ticket.id} />

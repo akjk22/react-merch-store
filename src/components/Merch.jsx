@@ -16,6 +16,7 @@ function Ticket(props) {
 Ticket.propTypes = {
   name: PropTypes.string,
   location: PropTypes.string,
+  inventory: PropTypes.string,
   issue: PropTypes.string,
   id: PropTypes.string, // new PropType
   whenTicketClicked: PropTypes.func // new PropType

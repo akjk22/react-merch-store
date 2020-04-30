@@ -1,5 +1,5 @@
 import React from 'react';
-import NewTicketForm from './NewMerchForm';
+// import NewTicketForm from './NewMerchForm';
 import TicketList from './MerchList';
 import TicketDetail from './MerchDetail';
 import EditTicketForm from './EditMerchForm';
@@ -34,13 +34,13 @@ class MerchControl extends React.Component {
       }));
     }
   }
-  handleAddingNewTicketToList = (newTicket) => {
-    const newMasterTicketList = this.state.masterTicketList.concat(newTicket);
-    this.setState({
-      masterTicketList: newMasterTicketList,
-      formVisibleOnPage: false
-    });
-  }
+  // handleAddingNewTicketToList = (newTicket) => {
+  //   const newMasterTicketList = this.state.masterTicketList.concat(newTicket);
+  //   this.setState({
+  //     masterTicketList: newMasterTicketList,
+  //     formVisibleOnPage: false
+  //   });
+  // }
   handleChangingSelectedTicket = (id) => {
     const selectedTicket = this.state.masterTicketList.filter(ticket => ticket.id === id)[0];
     this.setState({ selectedTicket: selectedTicket });
@@ -73,11 +73,11 @@ class MerchControl extends React.Component {
         onClickingEdit={this.handleEditClick} />
       buttonText = "Return to Ticket List";
     }
-    else if (this.state.formVisibleOnPage) {
-      // This conditional needs to be updated to "else if."
-      currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList} />;
-      buttonText = "Return to Ticket List";
-    } else {
+    // else if (this.state.formVisibleOnPage) {
+    //   // This conditional needs to be updated to "else if."
+    //   currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList} />;
+    //   buttonText = "Return to Ticket List";
+    else {
       currentlyVisibleState =
         <TicketList ticketList={this.state.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />
 
@@ -89,7 +89,7 @@ class MerchControl extends React.Component {
     return (
       <React.Fragment>
         {currentlyVisibleState}
-        {/* <button onClick={this.handleClick}>{buttonText}</button>   */}
+        <button onClick={this.handleClick}>{buttonText}</button>
       </React.Fragment>
     );
   }

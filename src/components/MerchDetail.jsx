@@ -10,7 +10,8 @@ function TicketDetail(props) {
       <img width="200px" height="200px" src={ticket.location}></img>
       <h1>{ticket.name}</h1>
       <p><em>{ticket.issue}</em></p>
-      <button onClick={props.onClickingEdit}>Update Ticket</button> { /* new code */}
+      <p><em>There are {ticket.inventory} left </em></p>
+      <button onClick={props.onClickingEdit}>Buy One</button> { /* new code */}
       <hr />
     </React.Fragment>
   );
