@@ -1,4 +1,7 @@
-
+import Image1 from '../assets/shirt.jpg'
+import Image2 from '../assets/shirt.jpg'
+import Image3 from '../assets/shirt.jpg'
+import { v4 } from 'uuid';
 
 const masterTicketList = [
   {
