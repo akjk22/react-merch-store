@@ -8,6 +8,7 @@ function Ticket(props) {
         <img width="200px" height="200px" src={props.location}></img>
         <h1>{props.name}</h1>
         <p><em>{props.issue}</em></p>
+        <p><em>There are {props.inventory} left </em></p>
         <hr /></div>
     </React.Fragment >
   );

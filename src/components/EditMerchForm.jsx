@@ -7,8 +7,10 @@ function EditNewTicket(props) {
   const { ticket } = props;
 
   function handleEditTicketFormSubmission(event) {
+    props.onClickingBuy(ticket.id)
+    props.onClicky()
     event.preventDefault();
-    props.onEditTicket({ name: ticket.name, location: ticket.location, issue: ticket.issue, inventory: ticket.inventory, id: ticket.id });
+    //props.onEditTicket({ name: ticket.name, location: ticket.location, issue: ticket.issue, inventory: ticket.inventory, id: ticket.id });
   }
 
   return (
@@ -22,3 +24,4 @@ function EditNewTicket(props) {
 
 
 export default EditNewTicket;
+

@@ -19,7 +19,14 @@ function TicketDetail(props) {
 
 TicketDetail.propTypes = {
   ticket: PropTypes.object,
-  onClickingEdit: PropTypes.func // new code
+  onClickingEdit: PropTypes.func
+
+
 };
 
 export default TicketDetail;
+
+
+
+
+// onClick={() => onClickingBuy(item.id)}

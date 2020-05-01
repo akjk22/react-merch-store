@@ -3,7 +3,11 @@ import React from 'react';
 import TicketList from './MerchList';
 import TicketDetail from './MerchDetail';
 import EditTicketForm from './EditMerchForm';
-import { merchList } from './FakeMerchService';
+// import { merchList } from './FakeMerchService';
+import Image1 from '../assets/shirt.jpg'
+import Image2 from '../assets/shirt.jpg'
+import Image3 from '../assets/shirt.jpg'
+import { v4 } from 'uuid';
 
 class MerchControl extends React.Component {
 
@@ -12,7 +16,29 @@ class MerchControl extends React.Component {
     this.state = {
 
       formVisibleOnPage: false,
-      masterTicketList: merchList(),
+      masterTicketList: [
+        {
+          name: 'T-Shirt',
+          location: Image1,
+          issue: 'This is a quality T-Shirt',
+          inventory: 10,
+          id: v4()
+        },
+        {
+          name: 'Sweatshirt',
+          location: Image2,
+          issue: 'This is a quality Sweatshirt',
+          inventory: 10,
+          id: v4()
+        },
+        {
+          name: 'Turtleneck',
+          location: Image3,
+          issue: 'This is a quality Turtleneck',
+          inventory: 10,
+          id: v4()
+        }
+      ],
       selectedTicket: null,
       editing: false
     };
@@ -20,6 +46,25 @@ class MerchControl extends React.Component {
     this.handleClick = this.handleClick.bind(this); //new code here
   }
 
+  // method to mutate state
+  // needs to know which item to change
+  // start with a console.log() to ensure this is working
+
+  // };
+  handleBuy = (itemToBuy) => {
+
+    const buyItem = this.state.masterTicketList.map((item) => {
+      if (item.id !== this.state.selectedTicket.id) {
+        return item;
+      }
+      return {
+        ...item,
+        inventory: item.inventory - 1,
+      };
+    });
+    console.log(buyItem)
+    this.setState({ masterTicketList: buyItem, editing: true });
+  }
 
   handleClick = () => {
     if (this.state.selectedTicket != null) {
@@ -65,27 +110,28 @@ class MerchControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null;
     if (this.state.editing) {
-      currentlyVisibleState = <EditTicketForm ticket={this.state.selectedTicket} onEditTicket={this.handleEditingTicketInList} />
+      currentlyVisibleState = <EditTicketForm onClicky={this.handleClick} onClickingBuy={this.handleBuy} ticket={this.state.selectedTicket} onEditTicket={this.handleEditingTicketInList} />
       buttonText = "Return to Ticket List";
-    } else if (this.state.selectedTicket != null) {
-      currentlyVisibleState = <TicketDetail
-        ticket={this.state.selectedTicket}
-        onClickingEdit={this.handleEditClick} />
-      buttonText = "Return to Ticket List";
-    }
-    // else if (this.state.formVisibleOnPage) {
-    //   // This conditional needs to be updated to "else if."
-    //   currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList} />;
-    //   buttonText = "Return to Ticket List";
-    else {
-      currentlyVisibleState =
-        <TicketList ticketList={this.state.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />
+    } else
+      if (this.state.selectedTicket != null) {
+        currentlyVisibleState = <TicketDetail
+          ticket={this.state.selectedTicket}
+          onClickingEdit={this.handleEditClick} />
+        buttonText = "Return to Ticket List";
+      }
+      // else if (this.state.formVisibleOnPage) {
+      //   // This conditional needs to be updated to "else if."
+      //   currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList} />;
+      //   buttonText = "Return to Ticket List";
+      else {
+        currentlyVisibleState =
+          <TicketList ticketList={this.state.masterTicketList} onTicketSelection={this.handleChangingSelectedTicket} />
 
 
 
-      // Because a user will actually be clicking on the ticket in the Ticket component, we will need to pass our new handleChangingSelectedTicket method as a prop.
-      // buttonText = "Add Ticket";
-    }
+        // Because a user will actually be clicking on the ticket in the Ticket component, we will need to pass our new handleChangingSelectedTicket method as a prop.
+        // buttonText = "Add Ticket";
+      }
     return (
       <React.Fragment>
         {currentlyVisibleState}
