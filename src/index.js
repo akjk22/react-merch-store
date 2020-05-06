@@ -3,11 +3,44 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux'
+
+function reducer(state = {}, action) {
+  const { name, img, inventory, issue, id } = action;
+  switch (action.type) {
+    case 'ADD_MERCH':
+    return Object.assign({}, state, {
+      [id]: {
+        name: name,
+        img: img,
+        inventory: inventory,
+        issue: issue,
+        id: id
+      }
+    });
+    case 'DELETE_MERCH':
+      const newState = { ...state };
+      delete newState[id];
+      return newState;
+    default:
+  return state;
+  }
+}
+
+
+const store = createStore(reducer);
+
+store.subscribe(() =>
+  console.log(store.getState())
+);
 
 ReactDOM.render(
-  <React.StrictMode>
+
+    <Provider store={store}>
     <App />
-  </React.StrictMode>,
+    </Provider>,
+
   document.getElementById('root')
 );
 

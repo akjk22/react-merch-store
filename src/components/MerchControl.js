@@ -4,6 +4,8 @@ import MerchList from './MerchList';
 import MerchDetail from './MerchDetail';
 import EditMerchForm from './EditMerchForm';
 import { merchList } from './FakeMerchService';
+import './MerchControl.css';
+import { connect } from 'react-redux';
 
 
 class MerchControl extends React.Component {
@@ -25,7 +27,7 @@ class MerchControl extends React.Component {
   // start with a console.log() to ensure this is working
 
   // };
-  handleBuy = (itemToBuy) => {
+  handleBuy = () => {
 
     const buyItem = this.state.masterMerchList.map((item) => {
       if (item.id !== this.state.selectedMerch.id) {
@@ -71,15 +73,33 @@ class MerchControl extends React.Component {
   }
 
   handleEditingMerchInList = (merchToEdit) => {
-    const editedMasterMerchList = this.state.masterMerchList
-      .filter(merch => merch.id !== this.state.selectedMerch.id)
-      .concat(merchToEdit);
+    // const editedMasterMerchList = this.state.masterMerchList
+    //   .filter(merch => merch.id !== this.state.selectedMerch.id)
+    //   .concat(merchToEdit);
+    // this.setState({
+    //   masterMerchList: editedMasterMerchList,
+    //   editing: false,
+    //   selectedMerch: null
+    // });
+
+    const { dispatch } = this.props;
+    const { name, img, inventory, issue, id } = merchToEdit;
+    const action = {
+      type: 'ADD_TICKET',
+      id: id,
+      name: name,
+      issue: issue,
+      inventory: inventory,
+      img: img
+    }
+    dispatch(action);
     this.setState({
-      masterMerchList: editedMasterMerchList,
       editing: false,
-      selectedMerch: null
+      selectedTicket: null
     });
   }
+
+
 
   render() {
     let currentlyVisibleState = null;
@@ -109,10 +129,18 @@ class MerchControl extends React.Component {
       }
     return (
       <React.Fragment>
-        {currentlyVisibleState}
-        <button onClick={this.handleClick}>{buttonText}</button>
+        <div className="container">
+          {currentlyVisibleState}
+          <button onClick={this.handleClick}>{buttonText}</button>
+        </div>
       </React.Fragment>
     );
   }
 }
-export default MerchControl;
+
+const mapStateToProps = (state) => {
+  return {
+    masterMerchList: state
+  }
+}
+export default connect(mapStateToProps)(MerchControl);
