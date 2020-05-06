@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Ticket(props) {
+function Merch(props) {
   return (
     <React.Fragment>
-      <div onClick={() => props.whenTicketClicked(props.id)}>
-        <img width="200px" height="200px" src={props.location}></img>
+      <div onClick={() => props.whenMerchClicked(props.id)}>
+        <img alt="" width="200px" height="200px" src={props.img}></img>
         <h1>{props.name}</h1>
         <p><em>{props.issue}</em></p>
         <p><em>There are {props.inventory} left </em></p>
@@ -14,13 +14,13 @@ function Ticket(props) {
   );
 }
 
-Ticket.propTypes = {
+Merch.propTypes = {
   name: PropTypes.string,
-  location: PropTypes.string,
+  img: PropTypes.string,
   inventory: PropTypes.string,
   issue: PropTypes.string,
   id: PropTypes.string, // new PropType
-  whenTicketClicked: PropTypes.func // new PropType
+  whenMerchClicked: PropTypes.func // new PropType
 };
 
-export default Ticket;
+export default Merch;
