@@ -4,44 +4,23 @@ import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
-import { Provider } from 'react-redux'
-
-function reducer(state = {}, action) {
-  const { name, img, inventory, issue, id } = action;
-  switch (action.type) {
-    case 'ADD_MERCH':
-    return Object.assign({}, state, {
-      [id]: {
-        name: name,
-        img: img,
-        inventory: inventory,
-        issue: issue,
-        id: id
-      }
-    });
-    case 'DELETE_MERCH':
-      const newState = { ...state };
-      delete newState[id];
-      return newState;
-    default:
-  return state;
-  }
-}
+import { Provider } from 'react-redux';
+// import reducer from './reducers/merch-list-reducer';
+import rootReducer from './reducers/index';
 
 
-const store = createStore(reducer);
+const store = createStore(rootReducer);
+
 
 store.subscribe(() =>
   console.log(store.getState())
 );
 
 ReactDOM.render(
-
-    <Provider store={store}>
-    <App />
-    </Provider>,
-
-  document.getElementById('root')
+<Provider store={store}>
+  <App />
+</Provider>,
+document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

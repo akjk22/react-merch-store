@@ -13,7 +13,8 @@ class MerchControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formVisibleOnPage: false,
+      // formVisibleOnPage: false,
+      // no longer need this since our RootReducer handles this
       masterMerchList: merchList(),
       selectedMerch: null,
       editing: false
@@ -45,14 +46,20 @@ class MerchControl extends React.Component {
   handleClick = () => {
     if (this.state.selectedMerch != null) {
       this.setState({
-        formVisibleOnPage: false,
+        // formVisibleOnPage: false,
         selectedMerch: null,
         editing: false // new code
       });
     } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage,
-      }));
+      // this.setState(prevState => ({
+      //   formVisibleOnPage: !prevState.formVisibleOnPage,
+      // }));
+      // no longer need any setState methods dealing with the form since Redux takes care of this slice of state
+      const { dispatch } = this.props;
+      const action = {
+        type: 'TOGGLE_FORM'
+      }
+      dispatch(action);
     }
   }
   // handleAddingNewMerchToList = (newMerch) => {
@@ -62,6 +69,25 @@ class MerchControl extends React.Component {
   //     formVisibleOnPage: false
   //   });
   // }
+
+  handleAddingNewMerchToList = (newMerch) => {
+    const { dispatch } = this.props;
+    const { name, img, inventory, issue, id } = newMerch;
+    const action = {
+      type: 'ADD_MERCH',
+      name: name,
+      img: img,
+      inventory: inventory,
+      issue: issue,
+      id: id
+    }
+    dispatch(action);
+    const action2 = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(action2);
+  }
+
   handleChangingSelectedMerch = (id) => {
     const selectedMerch = this.state.masterMerchList.filter(merch => merch.id === id)[0];
     this.setState({ selectedMerch: selectedMerch });
@@ -140,7 +166,10 @@ class MerchControl extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    masterMerchList: state
+    // masterTicketList: state
+    // we no longer need the above since we're using rootReducer in our store
+    masterTicketList: state.masterTicketList,
+    formVisibleOnPage: state.formVisibleOnPage
   }
 }
 export default connect(mapStateToProps)(MerchControl);
